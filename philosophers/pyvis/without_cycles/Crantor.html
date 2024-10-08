@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1>41[0.88%] nodes (ready: 17[41.46%], not ready: 24[58.54%], done: 0[0.00%])</h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1>41[0.88%] nodes (ready: 17[41.46%], not ready: 24[58.54%], done: 0[0.00%])</h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: black;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Democritus", "label": "Democritus|5", "level": 5, "shape": "dot", "title": "Democritus|5|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Heraclitus", "label": "Heraclitus|8", "level": 8, "shape": "dot", "title": "Heraclitus|8|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Plato", "label": "Plato|3", "level": 3, "shape": "dot", "title": "Plato|3|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Empedocles", "label": "Empedocles|5", "level": 5, "shape": "dot", "title": "Empedocles|5|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Pythagoreanism", "label": "Pythagoreanism|6", "level": 6, "shape": "dot", "title": "Pythagoreanism|6|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Alcmaeon_of_Croton", "label": "Alcmaeon of Croton|6", "level": 6, "shape": "dot", "title": "Alcmaeon of Croton|6|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Parmenides", "label": "Parmenides|7", "level": 7, "shape": "dot", "title": "Parmenides|7|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Xenophanes", "label": "Xenophanes|8", "level": 8, "shape": "dot", "title": "Xenophanes|8|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Protagoras", "label": "Protagoras|4", "level": 4, "shape": "dot", "title": "Protagoras|4|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Pythagoras", "label": "Pythagoras|9", "level": 9, "shape": "dot", "title": "Pythagoras|9|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Pherecydes_of_Syros", "label": "Pherecydes of Syros|10", "level": 10, "shape": "dot", "title": "Pherecydes of Syros|10|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Themistoclea", "label": "Themistoclea|10", "level": 10, "shape": "dot", "title": "Themistoclea|10|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Thales_of_Miletus", "label": "Thales of Miletus|11", "level": 11, "shape": "dot", "title": "Thales of Miletus|11|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Anaxagoras", "label": "Anaxagoras|6", "level": 6, "shape": "dot", "title": "Anaxagoras|6|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Anaximander", "label": "Anaximander|10", "level": 10, "shape": "dot", "title": "Anaximander|10|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Orphism_(religion)", "label": "Orphism (religion)|10", "level": 10, "shape": "dot", "title": "Orphism (religion)|10|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Homer", "label": "Homer|9", "level": 9, "shape": "dot", "title": "Homer|9|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Socrates", "label": "Socrates|4", "level": 4, "shape": "dot", "title": "Socrates|4|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Xenocrates", "label": "Xenocrates|1", "level": 1, "shape": "dot", "title": "Xenocrates|1|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Speusippus", "label": "Speusippus|2", "level": 2, "shape": "dot", "title": "Speusippus|2|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Epimenides", "label": "Epimenides|9", "level": 9, "shape": "dot", "title": "Epimenides|9|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Leucippus", "label": "Leucippus|6", "level": 6, "shape": "dot", "title": "Leucippus|6|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Melissus_of_Samos", "label": "Melissus of Samos|6", "level": 6, "shape": "dot", "title": "Melissus of Samos|6|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Hesiod", "label": "Hesiod|11", "level": 11, "shape": "dot", "title": "Hesiod|11|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Archytas", "label": "Archytas|4", "level": 4, "shape": "dot", "title": "Archytas|4|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Philolaus", "label": "Philolaus|5", "level": 5, "shape": "dot", "title": "Philolaus|5|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Anaximenes_of_Miletus", "label": "Anaximenes of Miletus|9", "level": 9, "shape": "dot", "title": "Anaximenes of Miletus|9|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Pittacus_of_Mytilene", "label": "Pittacus of Mytilene|11", "level": 11, "shape": "dot", "title": "Pittacus of Mytilene|11|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Bias_of_Priene", "label": "Bias of Priene|9", "level": 9, "shape": "dot", "title": "Bias of Priene|9|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Eleusinian_Mysteries", "label": "Eleusinian Mysteries|4", "level": 4, "shape": "dot", "title": "Eleusinian Mysteries|4|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Theaetetus_(mathematician)", "label": "Theaetetus (mathematician)|4", "level": 4, "shape": "dot", "title": "Theaetetus (mathematician)|4|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Diotima_of_Mantinea", "label": "Diotima of Mantinea|5", "level": 5, "shape": "dot", "title": "Diotima of Mantinea|5|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Theodorus_of_Cyrene", "label": "Theodorus of Cyrene|4", "level": 4, "shape": "dot", "title": "Theodorus of Cyrene|4|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Cratylus", "label": "Cratylus|4", "level": 4, "shape": "dot", "title": "Cratylus|4|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Sophist", "label": "Sophist|4", "level": 4, "shape": "dot", "title": "Sophist|4|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Zeno_of_Elea", "label": "Zeno of Elea|7", "level": 7, "shape": "dot", "title": "Zeno of Elea|7|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Archelaus_(philosopher)", "label": "Archelaus (philosopher)|5", "level": 5, "shape": "dot", "title": "Archelaus (philosopher)|5|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Milesian_school", "label": "Milesian school|7", "level": 7, "shape": "dot", "title": "Milesian school|7|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Damon_of_Athens", "label": "Damon of Athens|5", "level": 5, "shape": "dot", "title": "Damon of Athens|5|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Prodicus", "label": "Prodicus|5", "level": 5, "shape": "dot", "title": "Prodicus|5|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Crantor", "label": "Crantor|0", "level": 0, "shape": "dot", "title": "Crantor|0|[]"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "http://dbpedia.org/resource/Democritus", "to": "http://dbpedia.org/resource/Leucippus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Democritus", "to": "http://dbpedia.org/resource/Melissus_of_Samos"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Democritus", "to": "http://dbpedia.org/resource/Xenophanes"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Heraclitus", "to": "http://dbpedia.org/resource/Thales_of_Miletus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Heraclitus", "to": "http://dbpedia.org/resource/Anaximander"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Heraclitus", "to": "http://dbpedia.org/resource/Anaximenes_of_Miletus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Heraclitus", "to": "http://dbpedia.org/resource/Bias_of_Priene"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Pythagoras"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Eleusinian_Mysteries"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Theaetetus_(mathematician)"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Archytas"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Heraclitus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Hesiod"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Diotima_of_Mantinea"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Orphism_(religion)"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Theodorus_of_Cyrene"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Cratylus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Homer"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Socrates"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Parmenides"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Sophist"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Plato", "to": "http://dbpedia.org/resource/Protagoras"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Empedocles", "to": "http://dbpedia.org/resource/Pythagoreanism"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Empedocles", "to": "http://dbpedia.org/resource/Alcmaeon_of_Croton"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Empedocles", "to": "http://dbpedia.org/resource/Parmenides"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Empedocles", "to": "http://dbpedia.org/resource/Pythagoras"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Pythagoreanism", "to": "http://dbpedia.org/resource/Pythagoras"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Alcmaeon_of_Croton", "to": "http://dbpedia.org/resource/Pythagoras"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Parmenides", "to": "http://dbpedia.org/resource/Xenophanes"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Parmenides", "to": "http://dbpedia.org/resource/Heraclitus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Xenophanes", "to": "http://dbpedia.org/resource/Pythagoras"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Xenophanes", "to": "http://dbpedia.org/resource/Thales_of_Miletus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Xenophanes", "to": "http://dbpedia.org/resource/Epimenides"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Xenophanes", "to": "http://dbpedia.org/resource/Homer"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Protagoras", "to": "http://dbpedia.org/resource/Democritus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Protagoras", "to": "http://dbpedia.org/resource/Anaxagoras"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Protagoras", "to": "http://dbpedia.org/resource/Parmenides"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Protagoras", "to": "http://dbpedia.org/resource/Xenophanes"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Pythagoras", "to": "http://dbpedia.org/resource/Pherecydes_of_Syros"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Pythagoras", "to": "http://dbpedia.org/resource/Themistoclea"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Pythagoras", "to": "http://dbpedia.org/resource/Thales_of_Miletus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Pythagoras", "to": "http://dbpedia.org/resource/Anaximander"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Pythagoras", "to": "http://dbpedia.org/resource/Orphism_(religion)"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Pherecydes_of_Syros", "to": "http://dbpedia.org/resource/Hesiod"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Pherecydes_of_Syros", "to": "http://dbpedia.org/resource/Pittacus_of_Mytilene"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Anaxagoras", "to": "http://dbpedia.org/resource/Milesian_school"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Anaxagoras", "to": "http://dbpedia.org/resource/Parmenides"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Anaximander", "to": "http://dbpedia.org/resource/Thales_of_Miletus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Socrates", "to": "http://dbpedia.org/resource/Archelaus_(philosopher)"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Socrates", "to": "http://dbpedia.org/resource/Diotima_of_Mantinea"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Socrates", "to": "http://dbpedia.org/resource/Anaxagoras"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Socrates", "to": "http://dbpedia.org/resource/Parmenides"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Socrates", "to": "http://dbpedia.org/resource/Damon_of_Athens"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Socrates", "to": "http://dbpedia.org/resource/Prodicus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Socrates", "to": "http://dbpedia.org/resource/Empedocles"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Xenocrates", "to": "http://dbpedia.org/resource/Plato"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Xenocrates", "to": "http://dbpedia.org/resource/Speusippus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Xenocrates", "to": "http://dbpedia.org/resource/Pythagoreanism"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Speusippus", "to": "http://dbpedia.org/resource/Plato"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Speusippus", "to": "http://dbpedia.org/resource/Pythagoreanism"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Leucippus", "to": "http://dbpedia.org/resource/Zeno_of_Elea"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Leucippus", "to": "http://dbpedia.org/resource/Milesian_school"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Melissus_of_Samos", "to": "http://dbpedia.org/resource/Parmenides"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Archytas", "to": "http://dbpedia.org/resource/Philolaus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Philolaus", "to": "http://dbpedia.org/resource/Pythagoras"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Anaximenes_of_Miletus", "to": "http://dbpedia.org/resource/Thales_of_Miletus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Anaximenes_of_Miletus", "to": "http://dbpedia.org/resource/Anaximander"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zeno_of_Elea", "to": "http://dbpedia.org/resource/Xenophanes"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Archelaus_(philosopher)", "to": "http://dbpedia.org/resource/Anaxagoras"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Crantor", "to": "http://dbpedia.org/resource/Xenocrates"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"color": {"highlight": "#F9CE95"}, "fixed": {"y": false}}, "edges": {"color": {"highlight": "#F9CE95"}}, "layout": {"hierarchical": {"enabled": true, "sortMethod": "directed", "shakeTowards": "leaves", "direction": "LR", "levelSeparation": 210, "nodeSpacing": 100, "parentCentralization": true}}, "physics": {"enabled": false, "hierarchicalRepulsion": {"centralGravity": 0, "avoidOverlap": 1, "nodeDistance": 100}, "minVelocity": 0.75, "maxVelocity": 50, "solver": "hierarchicalRepulsion"}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

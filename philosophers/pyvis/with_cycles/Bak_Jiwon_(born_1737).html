@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1>24[0.51%] nodes (ready: 16[66.67%], not ready: 8[33.33%], done: 0[0.00%])</h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1>24[0.51%] nodes (ready: 16[66.67%], not ready: 8[33.33%], done: 0[0.00%])</h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: black;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Confucius", "label": "Confucius|6", "level": 6, "shape": "dot", "title": "Confucius|6|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Mozi", "label": "Mozi|3", "level": 3, "shape": "dot", "title": "Mozi|3|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Zhuang_Zhou", "label": "Zhuang Zhou|2", "level": 2, "shape": "dot", "title": "Zhuang Zhou|2|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Laozi", "label": "Laozi|3", "level": 3, "shape": "dot", "title": "Laozi|3|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Matteo_Ricci", "label": "Matteo Ricci|2", "level": 2, "shape": "dot", "title": "Matteo Ricci|2|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Zhu_Xi", "label": "Zhu Xi|2", "level": 2, "shape": "dot", "title": "Zhu Xi|2|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Zhang_Zai", "label": "Zhang Zai|3", "level": 3, "shape": "dot", "title": "Zhang Zai|3|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Zhou_Dunyi", "label": "Zhou Dunyi|4", "level": 4, "shape": "dot", "title": "Zhou Dunyi|4|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Zhou_dynasty", "label": "Zhou dynasty|7", "level": 7, "shape": "dot", "title": "Zhou dynasty|7|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Hui_Shi", "label": "Hui Shi|3", "level": 3, "shape": "dot", "title": "Hui Shi|3|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Cheng_Hao", "label": "Cheng Hao|3", "level": 3, "shape": "dot", "title": "Cheng Hao|3|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Cheng_Yi_(philosopher)", "label": "Cheng Yi (philosopher)|3", "level": 3, "shape": "dot", "title": "Cheng Yi (philosopher)|3|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Mencius", "label": "Mencius|5", "level": 5, "shape": "dot", "title": "Mencius|5|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Yang_Zhu", "label": "Yang Zhu|3", "level": 3, "shape": "dot", "title": "Yang Zhu|3|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Book_of_Rites", "label": "Book of Rites|7", "level": 7, "shape": "dot", "title": "Book of Rites|7|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Classic_of_Poetry", "label": "Classic of Poetry|7", "level": 7, "shape": "dot", "title": "Classic of Poetry|7|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Xia_dynasty", "label": "Xia dynasty|7", "level": 7, "shape": "dot", "title": "Xia dynasty|7|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Shang_dynasty", "label": "Shang dynasty|7", "level": 7, "shape": "dot", "title": "Shang dynasty|7|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/I_Ching", "label": "I Ching|7", "level": 7, "shape": "dot", "title": "I Ching|7|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Bak_Jiwon_(born_1737)", "label": "Bak Jiwon (born 1737)|0", "level": 0, "shape": "dot", "title": "Bak Jiwon (born 1737)|0|[]"}, {"color": "#95C0F9", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Hong_Daeyong", "label": "Hong Daeyong|1", "level": 1, "shape": "dot", "title": "Hong Daeyong|1|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Tycho_Brahe", "label": "Tycho Brahe|2", "level": 2, "shape": "dot", "title": "Tycho Brahe|2|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Kim_One-hang", "label": "|2", "level": 2, "shape": "dot", "title": "|2|[]"}, {"color": "#C0F995", "font": {"color": "white"}, "id": "http://dbpedia.org/resource/Kim_Seock-moon", "label": "|2", "level": 2, "shape": "dot", "title": "|2|[]"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "http://dbpedia.org/resource/Confucius", "to": "http://dbpedia.org/resource/Book_of_Rites"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Confucius", "to": "http://dbpedia.org/resource/Zhou_dynasty"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Confucius", "to": "http://dbpedia.org/resource/Classic_of_Poetry"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Confucius", "to": "http://dbpedia.org/resource/Xia_dynasty"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Confucius", "to": "http://dbpedia.org/resource/Shang_dynasty"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Confucius", "to": "http://dbpedia.org/resource/I_Ching"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zhuang_Zhou", "to": "http://dbpedia.org/resource/Mozi"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zhuang_Zhou", "to": "http://dbpedia.org/resource/Zhou_dynasty"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zhuang_Zhou", "to": "http://dbpedia.org/resource/Hui_Shi"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zhuang_Zhou", "to": "http://dbpedia.org/resource/Laozi"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zhuang_Zhou", "to": "http://dbpedia.org/resource/Yang_Zhu"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zhu_Xi", "to": "http://dbpedia.org/resource/Zhang_Zai"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zhu_Xi", "to": "http://dbpedia.org/resource/Zhou_Dunyi"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zhu_Xi", "to": "http://dbpedia.org/resource/Confucius"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zhu_Xi", "to": "http://dbpedia.org/resource/Cheng_Hao"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zhu_Xi", "to": "http://dbpedia.org/resource/Cheng_Yi_(philosopher)"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zhu_Xi", "to": "http://dbpedia.org/resource/Mencius"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zhou_Dunyi", "to": "http://dbpedia.org/resource/Confucius"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Zhou_Dunyi", "to": "http://dbpedia.org/resource/Mencius"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Cheng_Yi_(philosopher)", "to": "http://dbpedia.org/resource/Zhou_Dunyi"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Cheng_Yi_(philosopher)", "to": "http://dbpedia.org/resource/Confucius"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Cheng_Yi_(philosopher)", "to": "http://dbpedia.org/resource/Mencius"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Mencius", "to": "http://dbpedia.org/resource/Confucius"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Bak_Jiwon_(born_1737)", "to": "http://dbpedia.org/resource/Zhu_Xi"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Bak_Jiwon_(born_1737)", "to": "http://dbpedia.org/resource/Confucius"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Bak_Jiwon_(born_1737)", "to": "http://dbpedia.org/resource/Hong_Daeyong"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Bak_Jiwon_(born_1737)", "to": "http://dbpedia.org/resource/Mencius"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Hong_Daeyong", "to": "http://dbpedia.org/resource/Tycho_Brahe"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Hong_Daeyong", "to": "http://dbpedia.org/resource/Zhu_Xi"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Hong_Daeyong", "to": "http://dbpedia.org/resource/Zhuang_Zhou"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Hong_Daeyong", "to": "http://dbpedia.org/resource/Confucius"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Hong_Daeyong", "to": "http://dbpedia.org/resource/Matteo_Ricci"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Hong_Daeyong", "to": "http://dbpedia.org/resource/Mencius"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Hong_Daeyong", "to": "http://dbpedia.org/resource/Kim_One-hang"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Hong_Daeyong", "to": "http://dbpedia.org/resource/Kim_Seock-moon"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"color": {"highlight": "#F9CE95"}, "fixed": {"y": false}}, "edges": {"color": {"highlight": "#F9CE95"}}, "layout": {"hierarchical": {"enabled": true, "sortMethod": "directed", "shakeTowards": "leaves", "direction": "LR", "levelSeparation": 210, "nodeSpacing": 100, "parentCentralization": true}}, "physics": {"enabled": false, "hierarchicalRepulsion": {"centralGravity": 0, "avoidOverlap": 1, "nodeDistance": 100}, "minVelocity": 0.75, "maxVelocity": 50, "solver": "hierarchicalRepulsion"}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

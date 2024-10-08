@@ -1,0 +1,14 @@
+Generate the graph of the inspirations for each philosopher collected with some SPARQL requests to DBpedia (and manual rectifications).
+
+The philosophers of a graph are organized in levels where each level represents the longest path from the root philosopher to this philosopher. Choosing the longest path is more relevant than choosing the shortest path because it allows to better represent the flow of inspirations when a philosopher A is the inspiration of one philosopher B but also the inspiration of a philosopher C that also inspire B.
+Level 0:     B                 B
+             |\               / \
+Level 1:     | C better than A - C
+             |/
+Level 2:     A
+
+There is a problem when it exists a cycle between philosophers because it is not possible to compute a longest path. To avoid this, such cycles are detected and the philosophers participating in it are replaced by one node, removing this cycle. They can be put back in place after the calculation of the longest path.
+
+"Done" philosophers (whatever it may mean) can be added in philosophers_done.txt. When all philosophers who inspire another philosopher are done, or if this philosopher has no inspiration (its node is a leaf), the philosopher is "ready". The others are "not ready".
+
+The graphs are stored in the "philosophers/pyvis/with_cycles" and "philosophers/pyvis/without_cycles" folder.

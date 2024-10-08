@@ -1,0 +1,103 @@
+SELECT ?influenced ?influencer
+WHERE {
+?influenced a <http://dbpedia.org/ontology/Philosopher> .
+OPTIONAL { ?influenced <http://dbpedia.org/ontology/influencedBy> ?influencer }
+}
+ORDER BY ?influenced ?influencer
+
+SELECT ?influenced ?influenced_lab ?influencer ?influencer_lab
+WHERE {
+?influenced a <http://dbpedia.org/ontology/Philosopher> .
+OPTIONAL { ?influenced rdfs:label ?influenced_lab }
+OPTIONAL { ?influenced <http://dbpedia.org/ontology/influencedBy> ?influencer .
+  OPTIONAL { ?influencer rdfs:label ?influencer_lab }
+  FILTER(LANG(?influencer_lab) = "" || LANGMATCHES(LANG(?influencer_lab), "en"))
+}
+FILTER(LANG(?influenced_lab) = "" || LANGMATCHES(LANG(?influenced_lab), "en"))
+}
+ORDER BY ?influenced ?influencer
+
+-----------------------------------------------------------------------------------
+
+
+SELECT ?influenced ?influencer
+WHERE {
+?influencer a <http://dbpedia.org/ontology/Philosopher> .
+OPTIONAL { ?influencer <http://dbpedia.org/ontology/influenced> ?influenced }
+}
+ORDER BY ?influenced ?influencer
+
+SELECT ?influenced ?influenced_lab ?influencer ?influencer_lab
+WHERE {
+?influencer a <http://dbpedia.org/ontology/Philosopher> .
+OPTIONAL { ?influencer rdfs:label ?influencer_lab }
+OPTIONAL { ?influencer <http://dbpedia.org/ontology/influenced> ?influenced .
+  OPTIONAL { ?influenced rdfs:label ?influenced_lab }
+  FILTER(LANG(?influenced_lab) = "" || LANGMATCHES(LANG(?influenced_lab), "en"))
+}
+FILTER(LANG(?influencer_lab) = "" || LANGMATCHES(LANG(?influencer_lab), "en"))
+}
+ORDER BY ?influenced ?influencer
+
+-----------------------------------------------------------------------------------
+
+SELECT DISTINCT * WHERE
+{
+{
+  SELECT ?influenced ?influencer WHERE {
+      ?influenced a <http://dbpedia.org/ontology/Philosopher> .
+      OPTIONAL { ?influenced <http://dbpedia.org/ontology/influencedBy> ?influencer }
+  }
+}
+UNION
+{
+  SELECT ?influenced ?influencer WHERE {
+    ?influencer a <http://dbpedia.org/ontology/Philosopher> .
+    OPTIONAL { ?influencer <http://dbpedia.org/ontology/influenced> ?influenced }
+  }
+}
+}
+ORDER BY ?influenced ?influencer
+
+SELECT DISTINCT * WHERE
+{
+{
+SELECT ?influenced ?influenced_lab ?influencer ?influencer_lab
+WHERE {
+?influenced a <http://dbpedia.org/ontology/Philosopher> .
+OPTIONAL { ?influenced rdfs:label ?influenced_lab }
+OPTIONAL { ?influenced <http://dbpedia.org/ontology/influencedBy> ?influencer .
+  OPTIONAL { ?influencer rdfs:label ?influencer_lab }
+  FILTER(LANG(?influencer_lab) = "" || LANGMATCHES(LANG(?influencer_lab), "en"))
+}
+FILTER(LANG(?influenced_lab) = "" || LANGMATCHES(LANG(?influenced_lab), "en"))
+}
+}
+UNION
+{
+SELECT ?influenced ?influenced_lab ?influencer ?influencer_lab
+WHERE {
+?influencer a <http://dbpedia.org/ontology/Philosopher> .
+OPTIONAL { ?influencer rdfs:label ?influencer_lab }
+OPTIONAL { ?influencer <http://dbpedia.org/ontology/influenced> ?influenced .
+  OPTIONAL { ?influenced rdfs:label ?influenced_lab }
+  FILTER(LANG(?influenced_lab) = "" || LANGMATCHES(LANG(?influenced_lab), "en"))
+}
+FILTER(LANG(?influencer_lab) = "" || LANGMATCHES(LANG(?influencer_lab), "en"))
+}
+}
+}
+ORDER BY ?influenced ?influencer
+
+
+
+
+
+
+SELECT ?philosopher ?lab
+WHERE {
+?philosopher a <http://dbpedia.org/ontology/Philosopher> .
+OPTIONAL { ?philosopher rdfs:label ?lab }
+FILTER(LANGMATCHES(LANG(?lab), "en"))
+}
+ORDER BY ?philosopher
